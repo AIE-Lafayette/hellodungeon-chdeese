@@ -20,19 +20,15 @@ namespace HelloDungeon
 
             //get first and last name
 
-            Console.WriteLine("Enter First Name:");
-            string firstName = Console.ReadLine();
+            Console.WriteLine("Enter Name:");
+            string playerName = Console.ReadLine();
 
             Console.Clear();
 
-            Console.WriteLine("Enter Last Name:");
-            string lastName = Console.ReadLine();
+            //print name for feedback
+            Console.WriteLine("Character Name " + playerName);
 
-            Console.Clear();
-
-            //combine and print
-            playerName = firstName + " " + lastName;
-            Console.WriteLine("Welcome " + playerName);
+            
         }
 
     }
