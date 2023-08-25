@@ -26,7 +26,20 @@ namespace HelloDungeon
             Console.Clear();
 
             //print name for feedback
-            Console.WriteLine("Character Name " + playerName);
+            Console.WriteLine("Character Name: " + playerName);
+
+            Console.Clear();
+
+            //print stage information
+            Console.WriteLine("You hear seagulls around you and the sound of waves crashing on a shore.");
+            Console.WriteLine("There's a muffled voice coming from somewhere but you're not sure where.");
+            Console.WriteLine("The voice comes closer, you try to open your eyes but the light is blinding.");
+            Console.WriteLine("Before you have time to adjust to it, it vanishes and the muffles have become shouts as something grabs ahold and beings shaking you.");
+
+            //present choices to player
+            Console.WriteLine("A. Attack");
+            Console.WriteLine("B. Wake up");
+            Console.WriteLine("C. Go back to sleep");
 
             
         }
