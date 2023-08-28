@@ -12,19 +12,19 @@ namespace HelloDungeon
         {
 
             //create and initialize variables
-            string playerName;
-            int playerHealth = 100;
+            string playerName = "";
+            int playerHealth = 15;
             bool isAlive = true;
-            float storyProgress = 3.3f;
-            int stage;
 
             //player stats
             int strength = 0;
+            int strengthDamage = 2;
+            int basePlayerDamage = 2;
 
             //get first and last name
 
-            Console.WriteLine("Enter Name:");
-            string playerName = Console.ReadLine();
+            Console.Write("Enter Name:");
+            playerName = Console.ReadLine();
 
             Console.Clear();
 
@@ -40,42 +40,222 @@ namespace HelloDungeon
             Console.WriteLine("Before you have time to adjust to it, it vanishes and the muffles have become shouts as something grabs ahold and beings shaking you.");
 
             //present choices to player
-            Console.WriteLine("A. Attack");
-            Console.WriteLine("B. Wake up");
-            Console.WriteLine("C. Go back to sleep");
+            Console.WriteLine("1. Attack");
+            Console.WriteLine("2. Wake up");
+            Console.WriteLine("3. Go back to sleep");
 
             //choice mechanics
             string playerChoice = Console.ReadLine();
             bool combatInitiated = false;
-            if(playerChoice == "A")
+            bool getInput = true;
+            while (getInput)
             {
-                //fight
-                Console.WriteLine("You throw a jab straight ahead with full force into the figure's center.");
-                Console.WriteLine("The figure stumbles back and you're able to hop on your feet.");
-                Console.WriteLine("STRENGTH UP!!");
-                strength++;
-                combatInitiated = true;
-            }
-            else 
-            {
-                if(playerChoice == "B")
+
+
+                if (playerChoice == "1")
                 {
-                    //dodge
-                    Console.WriteLine("You open your eyes and there's a figure rearing for a punch.");
-                    Console.WriteLine("You move your head out of the way just in time and you roll out from under him.");
+                    //fight
+                    Console.WriteLine("You throw a jab straight ahead with full force into the figure's center.");
+                    Console.WriteLine("The figure stumbles back and you're able to hop on your feet.");
+                    Console.WriteLine("STRENGTH UP!!");
+                    strength++;
                     combatInitiated = true;
+                    getInput = false;
                 }
-                else if(playerChoice == "C")
-                 {
-                    //next stage B
-                    Console.WriteLine("There's a whoosh of air and you lose consciousness again.");
-                 }
+                else
+                {
+                    if (playerChoice == "2")
+                    {
+                        //dodge
+                        Console.WriteLine("You open your eyes and there's a figure rearing for a punch.");
+                        Console.WriteLine("You move your head out of the way just in time and you roll out from under him.");
+                        combatInitiated = true;
+                        getInput = false;
+                    }
+                    else if (playerChoice == "3")
+                    {
+                        //next stage B
+                        Console.WriteLine("There's a whoosh of air and you lose consciousness again.");
+                        getInput = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Input, try again.");
+                    }
+                }
+            }
 
                 //Option to Continue
                 Console.WriteLine("Press any key to continue");
                 Console.ReadKey(true);
                 Console.Clear();
-            }
+
+                //combat loop
+                if (combatInitiated)
+                {
+                    int enemyHealth = 20;
+                    int enemyDamage = 2;
+                    bool enemyStunned = false;
+                    while (combatInitiated)
+                    {
+                        Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
+                        if (playerHealth <= 0 || enemyHealth <= 0)
+                        {
+                            //end loop
+                            combatInitiated = false;
+                            if (enemyHealth <= 0)
+                            {
+                                //victory
+                                Console.WriteLine("YOU WIN");
+                                combatInitiated = false;
+                            }
+                            else
+                            {
+                                //defeat
+                                Console.WriteLine("YOU DIED");
+                                combatInitiated = false;
+                                isAlive = false;
+                            }
+                            
+                        }
+                        else
+                        {
+                            //battle
+
+                            //enemy move
+                            string enemyChoice;
+                            if (enemyStunned)
+                            {
+                                Console.WriteLine("The enemy is still getting back up!");
+                                Console.WriteLine("----------------------------");
+                                enemyChoice = "0";
+                            }
+                            else if (playerHealth >= 10 && enemyHealth >= 15)
+                            {
+                                enemyChoice = "1";
+                                Console.WriteLine("The enemy turns his body and takes a step back, rearing to attack.");
+                                Console.WriteLine("----------------------------");
+                            }
+                            else if (playerHealth > 4 && enemyHealth >= 8)
+                            {
+                                enemyChoice = "2";
+                                Console.WriteLine("The enemy pulls back his arm and gets ready to swing!");
+                                Console.WriteLine("----------------------------");
+                            }
+                            else if (enemyHealth < 8 && playerHealth > enemyHealth)
+                            {
+                                enemyChoice = "3";
+                                Console.WriteLine("The enemy looks like he's on gaurd.");
+                                Console.WriteLine("----------------------------");
+                            }
+                            else
+                            {
+                                enemyChoice = "4";
+                                Console.WriteLine("The enemy slightly raises his shield.");
+                                Console.WriteLine("----------------------------");
+                            }
+                            enemyStunned = false;
+
+                            //present options to player
+                            Console.WriteLine("What will you do?");
+                            Console.WriteLine("1. Strong attack");
+                            Console.WriteLine("2. Quick attack");
+                            Console.WriteLine("3. Dodge");
+                            Console.WriteLine("4. Block");
+
+                            playerChoice = Console.ReadLine();
+                            //get valid input for player choice
+                            while(playerChoice != "1" && playerChoice != "2" && playerChoice != "3" && playerChoice != "4")
+                            {
+                                Console.WriteLine("Enter 1, 2, 3, or 4.");
+                                playerChoice = Console.ReadLine();
+                            }
+                            
+
+                            //process damage stat
+                            strengthDamage = strength * strengthDamage;
+                            int playerDamage = basePlayerDamage + strengthDamage;
+
+
+                            //player choice
+                            if (playerChoice == "1")
+                            {
+                                if (enemyChoice == "3")
+                                {
+                                    Console.WriteLine("He dodged out of the way!");
+
+                                }
+                                else if (enemyChoice == "1")
+                                {
+                                    Console.WriteLine("You trade heavy blows.");
+                                    enemyHealth -= playerDamage + 2;
+                                    playerHealth -= enemyDamage + 2;
+                                }
+                                else if (enemyChoice == "2")
+                                {
+                                    Console.WriteLine("The enemy's attack was too fast, he hit you before you could do anything!");
+                                    playerHealth -= enemyDamage;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("You hit the enemy for " + (playerDamage + 2) + " damage!");
+                                    enemyHealth -= playerDamage + 2;
+                                }
+                            }
+                            else if (playerChoice == "2")
+                            {
+                                if (enemyChoice == "2")
+                                {
+                                    Console.WriteLine("He hit you first!");
+                                    playerHealth -= enemyDamage;
+                                }
+                                else
+                                {
+                                    enemyHealth -= playerDamage;
+                                    Console.WriteLine("you hit the enemy before he could do anything! You hit for " + playerDamage + " damage!");
+                                }
+                            }
+                            else if (playerChoice == "3")
+                            {
+                                if (enemyChoice == "1")
+                                {
+                                    enemyStunned = true;
+                                    Console.WriteLine("You dodge and he falls on the ground! He's stunned!");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Nothing happened");
+                                }
+                                
+                            }
+                            else
+                            {
+                                if(enemyChoice == "1")
+                                {
+                                    Console.WriteLine("OWW the attack went through and you took " + (enemyDamage + 2) + " damage!!");
+                                }
+                                else if (enemyChoice == "2")
+                                {
+                                    Console.WriteLine("The enemy attacks but you raise your shield and block it!!");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("You raise your shield but nothing happened.");
+                                }
+
+                            }
+                            Console.Clear();
+                        }
+
+                        //continue
+                        Console.WriteLine("Press any key to continue.");
+                        Console.ReadKey(true);
+                        Console.Clear();
+                    }
+                    
+                }
+
+            
             
         }
 
