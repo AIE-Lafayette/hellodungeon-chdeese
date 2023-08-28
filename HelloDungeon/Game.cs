@@ -138,14 +138,14 @@ namespace HelloDungeon
                                 Console.WriteLine("----------------------------");
                                 enemyChoice = "0";
                             }
-                            else if ((playerHealth < enemyHealth) && (enemyHealth != 14) && (enemyHealth != 15))
+                            else if ((playerHealth < enemyHealth) && (enemyHealth != 14) && (enemyHealth != 15) && (enemyHealth != 13))
                             {
                                 //enemy prepares strong attack
                                 enemyChoice = "1";
                                 Console.WriteLine("The enemy turns his body and takes a step back, rearing to attack.");
                                 Console.WriteLine("----------------------------");
                             }
-                            else if (playerHealth > 6 && enemyHealth >= 8)
+                            else if (playerHealth > 6 && enemyHealth >= 10)
                             {
                                 //enemy prepares quick attack
                                 enemyChoice = "2";
@@ -228,7 +228,12 @@ namespace HelloDungeon
                                     Console.WriteLine("He hit you first!");
                                     playerHealth -= enemyDamage;
                                 }
-                                else
+                                else if (enemyChoice == "4")
+                                {
+                                    //enemy blocks your attack
+                                    Console.WriteLine("Your attack was blocked!");
+                                }
+                                else 
                                 {
                                     //you quick attack enemy
                                     enemyHealth -= playerDamage;
