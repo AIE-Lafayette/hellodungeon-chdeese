@@ -25,7 +25,7 @@ namespace HelloDungeon
             while (!gameOver)
             {
 
-                //get first and last name
+                //get player name
 
                 Console.Write("Enter Name:");
                 playerName = Console.ReadLine();
@@ -243,7 +243,7 @@ namespace HelloDungeon
                                 {
                                     //you quick attack enemy
                                     enemyHealth -= playerDamage;
-                                    Console.WriteLine("you hit the enemy before he could do anything! You hit for " + playerDamage + " damage!");
+                                    Console.WriteLine("You hit the enemy before he could do anything! You hit for " + playerDamage + " damage!");
                                 }
                             }
                             else if (playerChoice == "3")
