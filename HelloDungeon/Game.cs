@@ -126,30 +126,35 @@ namespace HelloDungeon
                             string enemyChoice;
                             if (enemyStunned)
                             {
+                                //enemy is stunned for a round
                                 Console.WriteLine("The enemy is still getting back up!");
                                 Console.WriteLine("----------------------------");
                                 enemyChoice = "0";
                             }
                             else if (playerHealth >= 10 && enemyHealth >= 15)
                             {
+                                //enemy prepares strong attack
                                 enemyChoice = "1";
                                 Console.WriteLine("The enemy turns his body and takes a step back, rearing to attack.");
                                 Console.WriteLine("----------------------------");
                             }
                             else if (playerHealth > 4 && enemyHealth >= 8)
                             {
+                                //enemy prepares quick attack
                                 enemyChoice = "2";
                                 Console.WriteLine("The enemy pulls back his arm and gets ready to swing!");
                                 Console.WriteLine("----------------------------");
                             }
                             else if (enemyHealth < 8 && playerHealth > enemyHealth)
                             {
+                                //enemy prepares dodge
                                 enemyChoice = "3";
                                 Console.WriteLine("The enemy looks like he's on gaurd.");
                                 Console.WriteLine("----------------------------");
                             }
                             else
                             {
+                                //enemy prepares block
                                 enemyChoice = "4";
                                 Console.WriteLine("The enemy slightly raises his shield.");
                                 Console.WriteLine("----------------------------");
@@ -164,7 +169,8 @@ namespace HelloDungeon
                             Console.WriteLine("4. Block");
 
                             playerChoice = Console.ReadLine();
-                            //get valid input for player choice
+
+                            //get valid input for player choice with a while loop
                             while(playerChoice != "1" && playerChoice != "2" && playerChoice != "3" && playerChoice != "4")
                             {
                                 Console.WriteLine("Enter 1, 2, 3, or 4.");
@@ -182,22 +188,26 @@ namespace HelloDungeon
                             {
                                 if (enemyChoice == "3")
                                 {
+                                    //enemy dodge
                                     Console.WriteLine("He dodged out of the way!");
 
                                 }
                                 else if (enemyChoice == "1")
                                 {
+                                    //player and enemy have successful heavy attacks
                                     Console.WriteLine("You trade heavy blows.");
                                     enemyHealth -= playerDamage + 2;
                                     playerHealth -= enemyDamage + 2;
                                 }
                                 else if (enemyChoice == "2")
                                 {
+                                    //enemy interupts player
                                     Console.WriteLine("The enemy's attack was too fast, he hit you before you could do anything!");
                                     playerHealth -= enemyDamage;
                                 }
                                 else
                                 {
+                                    //strong attack success
                                     Console.WriteLine("You hit the enemy for " + (playerDamage + 2) + " damage!");
                                     enemyHealth -= playerDamage + 2;
                                 }
@@ -206,11 +216,13 @@ namespace HelloDungeon
                             {
                                 if (enemyChoice == "2")
                                 {
+                                    //enemy attacks you first with the same attack
                                     Console.WriteLine("He hit you first!");
                                     playerHealth -= enemyDamage;
                                 }
                                 else
                                 {
+                                    //you quick attack enemy
                                     enemyHealth -= playerDamage;
                                     Console.WriteLine("you hit the enemy before he could do anything! You hit for " + playerDamage + " damage!");
                                 }
@@ -219,12 +231,14 @@ namespace HelloDungeon
                             {
                                 if (enemyChoice == "1")
                                 {
+                                    //dodge stun
                                     enemyStunned = true;
                                     Console.WriteLine("You dodge and he falls on the ground! He's stunned!");
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Nothing happened");
+                                    //evasion
+                                    Console.WriteLine("You dodged out the way!");
                                 }
                                 
                             }
@@ -232,22 +246,28 @@ namespace HelloDungeon
                             {
                                 if(enemyChoice == "1")
                                 {
+                                    //player takes heavy damage
                                     Console.WriteLine("OWW the attack went through and you took " + (enemyDamage + 2) + " damage!!");
                                 }
                                 else if (enemyChoice == "2")
                                 {
+                                    //successful block
                                     Console.WriteLine("The enemy attacks but you raise your shield and block it!!");
                                 }
                                 else
                                 {
+                                    //null block
                                     Console.WriteLine("You raise your shield but nothing happened.");
                                 }
 
                             }
-                            Console.Clear();
-                        }
+                        //continue battle
+                        Console.WriteLine("Press any key to continue.");
+                        Console.ReadKey(true);
+                        Console.Clear();
+                    }
 
-                        //continue
+                        //continue story
                         Console.WriteLine("Press any key to continue.");
                         Console.ReadKey(true);
                         Console.Clear();
