@@ -125,7 +125,11 @@ namespace HelloDungeon
                         else
                         {
                             //display player and enemy health
+                            Console.WriteLine("----------------------------------------------------------------------");
                             Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
+
+                            displayStats(playerName, playerHealth, strength);
+
 
                             //battle
 
@@ -135,7 +139,7 @@ namespace HelloDungeon
                             {
                                 //enemy is stunned for a round
                                 Console.WriteLine("The enemy is still getting back up!");
-                                Console.WriteLine("----------------------------");
+                                Console.WriteLine("----------------------------------------------------------------------");
                                 enemyChoice = "0";
                             }
                             else if ((playerHealth < enemyHealth) && (enemyHealth != 14) && (enemyHealth != 15) && (enemyHealth != 13))
@@ -143,37 +147,39 @@ namespace HelloDungeon
                                 //enemy prepares strong attack
                                 enemyChoice = "1";
                                 Console.WriteLine("The enemy turns his body and takes a step back, rearing to attack.");
-                                Console.WriteLine("----------------------------");
+                                Console.WriteLine("----------------------------------------------------------------------");
                             }
                             else if (playerHealth > 6 && enemyHealth >= 10)
                             {
                                 //enemy prepares quick attack
                                 enemyChoice = "2";
                                 Console.WriteLine("The enemy pulls back his arm and gets ready to swing!");
-                                Console.WriteLine("----------------------------");
+                                Console.WriteLine("----------------------------------------------------------------------");
                             }
                             else if (enemyHealth < 8 && playerHealth > enemyHealth)
                             {
                                 //enemy prepares dodge
                                 enemyChoice = "3";
                                 Console.WriteLine("The enemy looks like he's on gaurd.");
-                                Console.WriteLine("----------------------------");
+                                Console.WriteLine("----------------------------------------------------------------------");
                             }
                             else
                             {
                                 //enemy prepares block
                                 enemyChoice = "4";
                                 Console.WriteLine("The enemy slightly raises his shield.");
-                                Console.WriteLine("----------------------------");
+                                Console.WriteLine("----------------------------------------------------------------------");
                             }
                             enemyStunned = false;
 
                             //present options to player
                             Console.WriteLine("What will you do?");
+                            Console.WriteLine();
                             Console.WriteLine("1. Strong attack");
                             Console.WriteLine("2. Quick attack");
                             Console.WriteLine("3. Dodge");
                             Console.WriteLine("4. Block");
+                            Console.Write("> ");
 
                             playerChoice = Console.ReadLine();
 
@@ -184,7 +190,7 @@ namespace HelloDungeon
                                 Console.WriteLine("Enter 1, 2, 3, or 4.");
                                 playerChoice = Console.ReadLine();
                             }
-
+                            Console.WriteLine("----------------------------------------------------------------------");
 
                             //process damage stat
                             strengthDamage = strength * strengthDamage;
@@ -315,5 +321,13 @@ namespace HelloDungeon
             
         }
 
+        void displayStats(string name, int playerHealth, int strength)
+        {
+            Console.WriteLine("Name: " + name);
+            Console.WriteLine("Strength: " + strength);
+            Console.WriteLine("----------------------------------------------------------------------");
+        }
+
     }
+
 }
