@@ -13,7 +13,7 @@ namespace HelloDungeon
 
             //create and initialize variables
             string playerName = "";
-            int playerHealth = 15;
+            int playerHealth = 10;
             bool isAlive = true;
 
             //player stats
@@ -93,12 +93,12 @@ namespace HelloDungeon
                 //combat loop
                 if (combatInitiated)
                 {
-                    int enemyHealth = 20;
+                    int enemyHealth = 25;
                     int enemyDamage = 2;
                     bool enemyStunned = false;
                     while (combatInitiated)
                     {
-                        Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
+                        
                         if (playerHealth <= 0 || enemyHealth <= 0)
                         {
                             //end loop
@@ -116,8 +116,10 @@ namespace HelloDungeon
                                 combatInitiated = false;
                                 isAlive = false;
                             }
-                            
-                        }
+                        //display player and enemy health
+                        Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
+
+                    }
                         else
                         {
                             //battle
@@ -138,7 +140,7 @@ namespace HelloDungeon
                                 Console.WriteLine("The enemy turns his body and takes a step back, rearing to attack.");
                                 Console.WriteLine("----------------------------");
                             }
-                            else if (playerHealth > 4 && enemyHealth >= 8)
+                            else if (playerHealth > 6 && enemyHealth >= 8)
                             {
                                 //enemy prepares quick attack
                                 enemyChoice = "2";
@@ -173,6 +175,7 @@ namespace HelloDungeon
                             //get valid input for player choice with a while loop
                             while(playerChoice != "1" && playerChoice != "2" && playerChoice != "3" && playerChoice != "4")
                             {
+                                Console.Clear();
                                 Console.WriteLine("Enter 1, 2, 3, or 4.");
                                 playerChoice = Console.ReadLine();
                             }
@@ -267,13 +270,14 @@ namespace HelloDungeon
                         Console.Clear();
                     }
 
-                        //continue story
-                        Console.WriteLine("Press any key to continue.");
-                        Console.ReadKey(true);
-                        Console.Clear();
+                        
                     }
-                    
-                }
+                //continue story
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey(true);
+                Console.Clear();
+
+            }
 
             
             
