@@ -15,75 +15,79 @@ namespace HelloDungeon
             string playerName = "";
             int playerHealth = 10;
             bool isAlive = true;
+            bool gameOver = false;
 
             //player stats
             int strength = 0;
             int strengthDamage = 2;
             int basePlayerDamage = 2;
 
-            //get first and last name
-
-            Console.Write("Enter Name:");
-            playerName = Console.ReadLine();
-
-            Console.Clear();
-
-            //print name for feedback
-            Console.WriteLine("Character Name: " + playerName);
-
-            Console.Clear();
-
-            //print stage information
-            Console.WriteLine("You hear seagulls around you and the sound of waves crashing on a shore.");
-            Console.WriteLine("There's a muffled voice coming from somewhere but you're not sure where.");
-            Console.WriteLine("The voice comes closer, you try to open your eyes but the light is blinding.");
-            Console.WriteLine("Before you have time to adjust to it, it vanishes and the muffles have become shouts as something grabs ahold and beings shaking you.");
-
-            //present choices to player
-            Console.WriteLine("1. Attack");
-            Console.WriteLine("2. Wake up");
-            Console.WriteLine("3. Go back to sleep");
-
-            //choice mechanics
-            string playerChoice = Console.ReadLine();
-            bool combatInitiated = false;
-            bool getInput = true;
-            while (getInput)
+            while (!gameOver)
             {
 
+                //get first and last name
 
-                if (playerChoice == "1")
+                Console.Write("Enter Name:");
+                playerName = Console.ReadLine();
+
+                Console.Clear();
+
+                //print name for feedback
+                Console.WriteLine("Character Name: " + playerName);
+
+                Console.Clear();
+
+                //print stage information
+                Console.WriteLine("You hear seagulls around you and the sound of waves crashing on a shore.");
+                Console.WriteLine("There's a muffled voice coming from somewhere but you're not sure where.");
+                Console.WriteLine("The voice comes closer, you try to open your eyes but the light is blinding.");
+                Console.WriteLine("Before you have time to adjust to it, it vanishes and the muffles have become shouts as something grabs ahold and beings shaking you.");
+
+                //present choices to player
+                Console.WriteLine("1. Attack");
+                Console.WriteLine("2. Wake up");
+                Console.WriteLine("3. Go back to sleep");
+
+                //choice mechanics
+                string playerChoice = Console.ReadLine();
+                bool combatInitiated = false;
+                bool getInput = true;
+                while (getInput)
                 {
-                    //fight
-                    Console.WriteLine("You throw a jab straight ahead with full force into the figure's center.");
-                    Console.WriteLine("The figure stumbles back and you're able to hop on your feet.");
-                    Console.WriteLine("STRENGTH UP!!");
-                    strength++;
-                    combatInitiated = true;
-                    getInput = false;
-                }
-                else
-                {
-                    if (playerChoice == "2")
+
+
+                    if (playerChoice == "1")
                     {
-                        //dodge
-                        Console.WriteLine("You open your eyes and there's a figure rearing for a punch.");
-                        Console.WriteLine("You move your head out of the way just in time and you roll out from under him.");
+                        //fight
+                        Console.WriteLine("You throw a jab straight ahead with full force into the figure's center.");
+                        Console.WriteLine("The figure stumbles back and you're able to hop on your feet.");
+                        Console.WriteLine("STRENGTH UP!!");
+                        strength++;
                         combatInitiated = true;
-                        getInput = false;
-                    }
-                    else if (playerChoice == "3")
-                    {
-                        //next stage B
-                        Console.WriteLine("There's a whoosh of air and you lose consciousness again.");
                         getInput = false;
                     }
                     else
                     {
-                        Console.WriteLine("Invalid Input, try again.");
+                        if (playerChoice == "2")
+                        {
+                            //dodge
+                            Console.WriteLine("You open your eyes and there's a figure rearing for a punch.");
+                            Console.WriteLine("You move your head out of the way just in time and you roll out from under him.");
+                            combatInitiated = true;
+                            getInput = false;
+                        }
+                        else if (playerChoice == "3")
+                        {
+                            //next stage B
+                            Console.WriteLine("There's a whoosh of air and you lose consciousness again.");
+                            getInput = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Input, try again.");
+                        }
                     }
                 }
-            }
 
                 //Option to Continue
                 Console.WriteLine("Press any key to continue");
@@ -98,7 +102,7 @@ namespace HelloDungeon
                     bool enemyStunned = false;
                     while (combatInitiated)
                     {
-                        
+
                         if (playerHealth <= 0 || enemyHealth <= 0)
                         {
                             //end loop
@@ -116,12 +120,13 @@ namespace HelloDungeon
                                 combatInitiated = false;
                                 isAlive = false;
                             }
-                        //display player and enemy health
-                        Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
 
-                    }
+                        }
                         else
                         {
+                            //display player and enemy health
+                            Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
+
                             //battle
 
                             //enemy move
@@ -133,7 +138,7 @@ namespace HelloDungeon
                                 Console.WriteLine("----------------------------");
                                 enemyChoice = "0";
                             }
-                            else if (playerHealth >= 10 && enemyHealth >= 15)
+                            else if ((playerHealth < enemyHealth) && (enemyHealth != 14) && (enemyHealth != 15))
                             {
                                 //enemy prepares strong attack
                                 enemyChoice = "1";
@@ -173,13 +178,13 @@ namespace HelloDungeon
                             playerChoice = Console.ReadLine();
 
                             //get valid input for player choice with a while loop
-                            while(playerChoice != "1" && playerChoice != "2" && playerChoice != "3" && playerChoice != "4")
+                            while (playerChoice != "1" && playerChoice != "2" && playerChoice != "3" && playerChoice != "4")
                             {
                                 Console.Clear();
                                 Console.WriteLine("Enter 1, 2, 3, or 4.");
                                 playerChoice = Console.ReadLine();
                             }
-                            
+
 
                             //process damage stat
                             strengthDamage = strength * strengthDamage;
@@ -243,11 +248,11 @@ namespace HelloDungeon
                                     //evasion
                                     Console.WriteLine("You dodged out the way!");
                                 }
-                                
+
                             }
                             else
                             {
-                                if(enemyChoice == "1")
+                                if (enemyChoice == "1")
                                 {
                                     //player takes heavy damage
                                     Console.WriteLine("OWW the attack went through and you took " + (enemyDamage + 2) + " damage!!");
@@ -264,20 +269,42 @@ namespace HelloDungeon
                                 }
 
                             }
-                        //continue battle
-                        Console.WriteLine("Press any key to continue.");
-                        Console.ReadKey(true);
-                        Console.Clear();
-                    }
+                            //continue battle
+                            Console.WriteLine("Press any key to continue.");
+                            Console.ReadKey(true);
+                            Console.Clear();
+                        }
 
-                        
-                    }
-                //continue story
-                Console.WriteLine("Press any key to continue.");
-                Console.ReadKey(true);
-                Console.Clear();
 
-            }
+                    }
+                    //present the user an option to restart or end the game
+                    
+                    string userInput = "";
+                    while ((userInput != "1") && (userInput != "2"))
+                    {
+                        Console.WriteLine("To be continuted...    Would you like to restart?");
+                        Console.WriteLine("1. Yes     2. No");
+
+                        userInput = Console.ReadLine();
+
+                        //check input
+
+                        if (userInput == "1")
+                        {
+                            continue;
+                        }
+                        else if(userInput == "2")
+                        {
+                            gameOver = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Input, enter 1 for Yes, or enter 2 for No.");
+                        }
+                    }
+                    Console.Clear();
+                }
+            } 
 
             
             
