@@ -127,6 +127,7 @@ namespace HelloDungeon
                             //display player and enemy health
                             Console.WriteLine("----------------------------------------------------------------------");
                             Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
+                            Console.WriteLine("---------------       ----------------");
 
                             displayStats(playerName, playerHealth, strength);
 
@@ -219,11 +220,21 @@ namespace HelloDungeon
                                     Console.WriteLine("The enemy's attack was too fast, he hit you before you could do anything!");
                                     playerHealth -= enemyDamage;
                                 }
-                                else
+                                else if(enemyChoice == "4")
                                 {
                                     //strong attack success
-                                    Console.WriteLine("You hit the enemy for " + (playerDamage + 2) + " damage!");
+                                    Console.WriteLine("You went through his block and did " + (playerDamage) + " damage!");
                                     enemyHealth -= playerDamage + 2;
+                                }
+                                else if (enemyChoice == "0")
+                                {
+                                    //strong attack while enemy is stunned success -- Critical Hit!
+                                    Console.WriteLine("You hit him while he was down! Critical hit!!");
+                                    enemyHealth -= playerDamage + 4;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Error");
                                 }
                             }
                             else if (playerChoice == "2")
@@ -298,7 +309,7 @@ namespace HelloDungeon
 
                         userInput = Console.ReadLine();
 
-                        //check input
+                        //check input and end or restart game
 
                         if (userInput == "1")
                         {
