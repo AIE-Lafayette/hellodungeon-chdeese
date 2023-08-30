@@ -226,16 +226,13 @@ namespace HelloDungeon
                                     Console.WriteLine("You went through his block and did " + (playerDamage) + " damage!");
                                     enemyHealth -= playerDamage + 2;
                                 }
-                                else if (enemyChoice == "0")
+                                else 
                                 {
                                     //strong attack while enemy is stunned success -- Critical Hit!
                                     Console.WriteLine("You hit him while he was down! Critical hit!!");
                                     enemyHealth -= playerDamage + 4;
                                 }
-                                else
-                                {
-                                    Console.WriteLine("Error");
-                                }
+                                
                             }
                             else if (playerChoice == "2")
                             {
