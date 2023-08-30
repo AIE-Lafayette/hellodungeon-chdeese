@@ -8,9 +8,75 @@ namespace HelloDungeon
 {
     class Game
     {
+        void displayStats(string name, int playerHealth, int strength)
+        {
+            //display stat sheet to player
+            Console.WriteLine("Name: " + name);
+            Console.WriteLine("Strength: " + strength);
+            Console.WriteLine("----------------------------------------------------------------------");
+        }
+
+
+        //Display menu options 4 & 5 must have 0 inside the string to not print them when calling.
+        string DisplayMenu(string prompt, string optionA, string optionB, string optionC, string optionD, string optionE)
+        {
+            string playerChoice = "";
+            while (playerChoice != "1" || playerChoice != "2" || playerChoice != "3" || playerChoice != "4" || playerChoice != "5")
+            {
+                Console.WriteLine(prompt);
+                Console.WriteLine("1. " + optionA);
+                Console.WriteLine("2. " + optionB);
+                Console.WriteLine("3. " + optionC);
+                if (optionD != "0")
+                {
+                    Console.WriteLine("4. " + optionD);
+                    if (optionE != "0")
+                    {
+                        Console.WriteLine("5. " + optionE);
+                    }
+                }
+                Console.Write(">");
+
+                playerChoice = Console.ReadLine();
+
+                if (playerChoice == "1")
+                {
+                    return optionA;
+                }
+                else if (playerChoice == "2")
+                {
+                    return optionB;
+                }
+                else if (playerChoice == "3")
+                {
+                    return optionC;
+                }
+                else if (playerChoice == "4")
+                {
+                    return optionD;
+                }
+                else if (playerChoice == "5") 
+                {
+                    return optionE;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Input, press any key to try again");
+                    Console.ReadKey(true);
+                }
+                Console.Clear();
+               
+            }
+            return "";
+            
+        }
+
         public void Run()
         {
+            Console.WriteLine(DisplayMenu("Answer", "A", "B", "C", "D", "0"));
 
+            return;
+          
             //create and initialize variables
             string playerName = "";
             int playerHealth = 10;
@@ -95,7 +161,7 @@ namespace HelloDungeon
                 Console.Clear();
 
                 //combat loop
-                if (combatInitiated)
+                if (combatInitiated) 
                 {
                     int enemyHealth = 25;
                     int enemyDamage = 2;
@@ -184,11 +250,19 @@ namespace HelloDungeon
 
                             playerChoice = Console.ReadLine();
 
-                            //get valid input for player choice with a while loop
+                            //check for valid input, if not ask user again
                             while (playerChoice != "1" && playerChoice != "2" && playerChoice != "3" && playerChoice != "4")
                             {
                                 Console.Clear();
-                                Console.WriteLine("Enter 1, 2, 3, or 4.");
+                                Console.WriteLine("What will you do?");
+                                Console.WriteLine();
+                                Console.WriteLine("1. Strong attack");
+                                Console.WriteLine("2. Quick attack");
+                                Console.WriteLine("3. Dodge");
+                                Console.WriteLine("4. Block");
+                                Console.WriteLine();
+                                Console.WriteLine("Invalid Input. Enter 1, 2, 3, or 4.");
+                                Console.Write("> ");
                                 playerChoice = Console.ReadLine();
                             }
                             Console.WriteLine("----------------------------------------------------------------------");
@@ -329,12 +403,6 @@ namespace HelloDungeon
             
         }
 
-        void displayStats(string name, int playerHealth, int strength)
-        {
-            Console.WriteLine("Name: " + name);
-            Console.WriteLine("Strength: " + strength);
-            Console.WriteLine("----------------------------------------------------------------------");
-        }
 
     }
 
