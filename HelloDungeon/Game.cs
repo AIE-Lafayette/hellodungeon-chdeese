@@ -35,29 +35,13 @@ namespace HelloDungeon
                         Console.WriteLine("5. " + optionE);
                     }
                 }
-                Console.Write(">");
+                Console.Write("> ");
 
                 playerChoice = Console.ReadLine();
 
-                if (playerChoice == "1")
+                if (playerChoice == "1" || playerChoice == "2" || playerChoice == "3" || ((playerChoice == "4") && (optionD != "0")) || ((playerChoice == "5") && (optionE != "0")))
                 {
-                    return optionA;
-                }
-                else if (playerChoice == "2")
-                {
-                    return optionB;
-                }
-                else if (playerChoice == "3")
-                {
-                    return optionC;
-                }
-                else if (playerChoice == "4")
-                {
-                    return optionD;
-                }
-                else if (playerChoice == "5") 
-                {
-                    return optionE;
+                    return playerChoice;
                 }
                 else
                 {
@@ -73,23 +57,19 @@ namespace HelloDungeon
 
         public void Run()
         {
-            Console.WriteLine(DisplayMenu("Answer", "A", "B", "C", "D", "0"));
-
-            return;
-          
-            //create and initialize variables
-            string playerName = "";
-            int playerHealth = 10;
-            bool isAlive = true;
             bool gameOver = false;
-
-            //player stats
-            int strength = 0;
-            int strengthDamage = 2;
-            int basePlayerDamage = 2;
 
             while (!gameOver)
             {
+                //create and initialize variables
+                string playerName = "";
+                int playerHealth = 10;
+                bool isAlive = true;
+
+                //player stats
+                int strength = 0;
+                int strengthDamage = 2;
+                int basePlayerDamage = 2;
 
                 //get player name
 
@@ -98,24 +78,18 @@ namespace HelloDungeon
 
                 Console.Clear();
 
-                //print name for feedback
+                //print name for player feedback
                 Console.WriteLine("Character Name: " + playerName);
 
                 Console.Clear();
 
-                //print stage information
-                Console.WriteLine("You hear seagulls around you and the sound of waves crashing on a shore.");
-                Console.WriteLine("There's a muffled voice coming from somewhere but you're not sure where.");
-                Console.WriteLine("The voice comes closer, you try to open your eyes but the light is blinding.");
-                Console.WriteLine("Before you have time to adjust to it, it vanishes and the muffles have become shouts as something grabs ahold and beings shaking you.");
-
-                //present choices to player
-                Console.WriteLine("1. Attack");
-                Console.WriteLine("2. Wake up");
-                Console.WriteLine("3. Go back to sleep");
-
-                //choice mechanics
-                string playerChoice = Console.ReadLine();
+                //display prompt/options and recieve input from the player by calling the function DisplayMenu
+                string playerChoice = DisplayMenu("You hear seagulls around you and the sound of waves crashing on a shore. " +
+                    "\nThere's a muffled voice coming from somewhere but you're not sure where. " +
+                    "\nThe voice comes closer, you try to open your eyes but the light is blinding. " +
+                    "\nBefore you have time to adjust to it, it vanishes and the muffles have become " +
+                    "\nshouts as something grabs ahold and begins to shake you.",
+                    "Attack", "Wake Up", "Go back to sleep", "0", "0");
                 bool combatInitiated = false;
                 bool getInput = true;
                 while (getInput)
@@ -239,32 +213,9 @@ namespace HelloDungeon
                             }
                             enemyStunned = false;
 
-                            //present options to player
-                            Console.WriteLine("What will you do?");
-                            Console.WriteLine();
-                            Console.WriteLine("1. Strong attack");
-                            Console.WriteLine("2. Quick attack");
-                            Console.WriteLine("3. Dodge");
-                            Console.WriteLine("4. Block");
-                            Console.Write("> ");
 
-                            playerChoice = Console.ReadLine();
-
-                            //check for valid input, if not ask user again
-                            while (playerChoice != "1" && playerChoice != "2" && playerChoice != "3" && playerChoice != "4")
-                            {
-                                Console.Clear();
-                                Console.WriteLine("What will you do?");
-                                Console.WriteLine();
-                                Console.WriteLine("1. Strong attack");
-                                Console.WriteLine("2. Quick attack");
-                                Console.WriteLine("3. Dodge");
-                                Console.WriteLine("4. Block");
-                                Console.WriteLine();
-                                Console.WriteLine("Invalid Input. Enter 1, 2, 3, or 4.");
-                                Console.Write("> ");
-                                playerChoice = Console.ReadLine();
-                            }
+                            // call menu function to get player input for the battle
+                            playerChoice = DisplayMenu("What will you do?", "Strong attack", "Quick attack", "Dodge", "Block", "0");
                             Console.WriteLine("----------------------------------------------------------------------");
 
                             //process damage stat
@@ -363,6 +314,7 @@ namespace HelloDungeon
 
                             }
                             //continue battle
+                            Console.WriteLine("----------------------------------------------------------------------");
                             Console.WriteLine("Press any key to continue.");
                             Console.ReadKey(true);
                             Console.Clear();
