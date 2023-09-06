@@ -232,7 +232,7 @@ namespace HelloDungeon
             string userInput = "";
             while ((userInput != "1") && (userInput != "2"))
             {
-                Console.WriteLine("To be continuted...    Would you like to restart?");
+                Console.WriteLine("Would you like to restart?");
                 Console.WriteLine("1. Yes     2. No");
 
                 userInput = Console.ReadLine();
@@ -300,20 +300,23 @@ namespace HelloDungeon
                 Console.WriteLine(prompt);
                 Console.WriteLine("1. " + optionA);
                 Console.WriteLine("2. " + optionB);
-                Console.WriteLine("3. " + optionC);
-                if (optionD != "0")
+                if (optionC != "0")
                 {
-                    Console.WriteLine("4. " + optionD);
-                    if (optionE != "0")
+                    Console.WriteLine("3. " + optionC);
+                    if (optionD != "0")
                     {
-                        Console.WriteLine("5. " + optionE);
+                        Console.WriteLine("4. " + optionD);
+                        if (optionE != "0")
+                        {
+                            Console.WriteLine("5. " + optionE);
+                        }
                     }
                 }
                 Console.Write("> ");
 
                 playerChoice = Console.ReadLine();
 
-                if (playerChoice == "1" || playerChoice == "2" || playerChoice == "3" || ((playerChoice == "4") && (optionD != "0")) || ((playerChoice == "5") && (optionE != "0")))
+                if (playerChoice == "1" || playerChoice == "2" || ((playerChoice == "3") && (optionC != "0")) || ((playerChoice == "4") && (optionD != "0")) || ((playerChoice == "5") && (optionE != "0")))
                 {
                     return playerChoice;
                 }
@@ -355,6 +358,7 @@ namespace HelloDungeon
                     strength++;
                     combatInitiated = true;
                     getInput = false;
+                    initiateCombat(combatInitiated, basePlayerDamage, isAlive);
                 }
                 else
                 {
@@ -365,6 +369,7 @@ namespace HelloDungeon
                         Console.WriteLine("You move your head out of the way just in time and you roll out from under him.");
                         combatInitiated = true;
                         getInput = false;
+                        initiateCombat(combatInitiated, basePlayerDamage, isAlive);
                     }
                     else if (playerChoice == "3")
                     {
@@ -378,6 +383,12 @@ namespace HelloDungeon
                     }
                 }
             }
+
+        }
+
+        void Stage2()
+        {
+            //battle 2.
         }
 
         //main function
@@ -387,21 +398,26 @@ namespace HelloDungeon
 
             while (!gameOver)
             {
-
-                Stage1();
-                
-                //Option to Continue
-                Console.WriteLine("Press any key to continue");
-                Console.ReadKey(true);
-                Console.Clear();
-
-                //combat loop
-
-                initiateCombat(combatInitiated, basePlayerDamage, isAlive);
-
-                //present the user an option to restart or end the game
-                gameOver = restartMenu();
-                Console.Clear();
+                int stage = 1;
+                if (stage == 1)
+                {
+                    Stage1();
+                    stage++;
+                    playerChoice = DisplayMenu("Do you want to continue?" + "\n> ", "Yes", "No", "0", "0", "0");
+                    if (playerChoice == "2")
+                    {
+                        gameOver = restartMenu();
+                        continue;
+                    }
+                }
+                else if (stage == 2)
+                {
+                 //   Stage2();
+                    stage++;
+                    Console.WriteLine("The End.");
+                    gameOver = restartMenu();
+                    Console.Clear();
+                }
             }
 
 
