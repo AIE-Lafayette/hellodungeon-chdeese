@@ -428,7 +428,7 @@ namespace HelloDungeon
                         gameOver = restartMenu();
                         continue;
                     }
-                    else (playerChoice == "1")
+                    else if(playerChoice == "1")
                     {
                         continue;
                     }
