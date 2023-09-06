@@ -8,6 +8,21 @@ namespace HelloDungeon
 {
     class Game
     {
+        //create and initialize variables
+        string playerName = "";
+        string playerChoice = "";
+        bool isAlive = true;
+        bool combatInitiated = false;
+        bool getInput = true;
+
+        //player stats
+        int playerHealth = 10;
+        int strength = 0;
+        int strengthDamage = 2;
+        int basePlayerDamage = 2;
+
+
+
         //displays the player's stats
         void displayStats(string name, int playerHealth, int strength)
         {
@@ -300,6 +315,20 @@ namespace HelloDungeon
 
         }
 
+        void DisplayMainMenu()
+        {
+            //call the getPlayerInfo function to get players information (name for now)
+            playerName = getPlayerInfo();
+
+            //display prompt/options and recieve input from the player by calling the function DisplayMenu
+            playerChoice = DisplayMenu("Your name is: " + playerName + "\nYou hear seagulls around you and the sound of waves crashing on a shore. " +
+                "\nThere's a muffled voice coming from somewhere but you're not sure where. " +
+                "\nThe voice comes closer, you try to open your eyes but the light is blinding. " +
+                "\nBefore you have time to adjust to it, it vanishes and the muffles have become " +
+                "\nshouts as something grabs ahold and begins to shake you.",
+                "Attack", "Wake Up", "Go back to sleep", "0", "0");
+        }
+
         //main function
         public void Run()
         {
@@ -307,28 +336,9 @@ namespace HelloDungeon
 
             while (!gameOver)
             {
-                //create and initialize variables
-                string playerName = "";
-                int playerHealth = 10;
-                bool isAlive = true;
 
-                //player stats
-                int strength = 0;
-                int strengthDamage = 2;
-                int basePlayerDamage = 2;
-
-                //call the getPlayerInfo function to get players information (name for now)
-                playerName = getPlayerInfo();
-
-                //display prompt/options and recieve input from the player by calling the function DisplayMenu
-                string playerChoice = DisplayMenu("Your name is: " + playerName + "\nYou hear seagulls around you and the sound of waves crashing on a shore. " +
-                    "\nThere's a muffled voice coming from somewhere but you're not sure where. " +
-                    "\nThe voice comes closer, you try to open your eyes but the light is blinding. " +
-                    "\nBefore you have time to adjust to it, it vanishes and the muffles have become " +
-                    "\nshouts as something grabs ahold and begins to shake you.",
-                    "Attack", "Wake Up", "Go back to sleep", "0", "0");
-                bool combatInitiated = false;
-                bool getInput = true;
+                DisplayMainMenu();
+                
                 while (getInput)
                 {
 
