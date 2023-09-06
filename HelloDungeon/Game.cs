@@ -20,8 +20,46 @@ namespace HelloDungeon
         int strength = 0;
         int strengthDamage = 2;
         int basePlayerDamage = 2;
+        string enemyChoiceDialog = "";
+        int enemyHealth;
 
-
+        //function to determine the enemy's next move
+        string enemyMove(bool stunned)
+        {
+            string eChoice;
+            if (stunned)
+            {
+                //enemy is stunned for a round
+                enemyChoiceDialog = "The enemy is still getting back up!";
+                eChoice = "0";
+            }
+            else if ((playerHealth < enemyHealth) && (enemyHealth != 14) && (enemyHealth != 15) && (enemyHealth != 13))
+            {
+                //enemy prepares strong attack
+                eChoice = "1";
+                enemyChoiceDialog = "The enemy turns his body and takes a step back, rearing to attack.";
+            }
+            else if (playerHealth > 6 && enemyHealth >= 10)
+            {
+                //enemy prepares quick attack
+                eChoice = "2";
+                enemyChoiceDialog = "The enemy pulls back his arm and gets ready to swing!";
+            }
+            else if (enemyHealth < 8 && playerHealth > enemyHealth)
+            {
+                //enemy prepares dodge
+                eChoice = "3";
+                enemyChoiceDialog = "The enemy looks like he's on gaurd.";
+            }
+            else
+            {
+                //enemy prepares block
+                eChoice = "4";
+                enemyChoiceDialog = "The enemy slightly raises his shield.";
+            }
+            stunned = false;
+            return eChoice;
+        }
 
         //displays the player's stats
         void displayStats(string name, int playerHealth, int strength)
@@ -33,9 +71,9 @@ namespace HelloDungeon
         }
 
         //combat function
-        void initiateCombat(string username, bool combat, int playerHealth, int baseDamage, bool playerAlive, int playerStrength)
+        void initiateCombat(bool combat, int baseDamage, bool playerAlive)
         {
-                int enemyHealth = 25;
+                enemyHealth = 25;
                 int enemyDamage = 2;
                 bool enemyStunned = false;
                 string playerChoice = "0";
@@ -64,64 +102,24 @@ namespace HelloDungeon
                     }
                     else
                     {
-                        //display player and enemy health
-                        Console.WriteLine("----------------------------------------------------------------------");
-                        Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
-                        Console.WriteLine("---------------       ----------------");
-
-                        displayStats(username, playerHealth, playerStrength);
-
+                        
 
                         //battle
 
                         //enemy move
-                        string enemyChoice;
-                        if (enemyStunned)
-                        {
-                            //enemy is stunned for a round
-                            Console.WriteLine("The enemy is still getting back up!");
-                            Console.WriteLine("----------------------------------------------------------------------");
-                            enemyChoice = "0";
-                        }
-                        else if ((playerHealth < enemyHealth) && (enemyHealth != 14) && (enemyHealth != 15) && (enemyHealth != 13))
-                        {
-                            //enemy prepares strong attack
-                            enemyChoice = "1";
-                            Console.WriteLine("The enemy turns his body and takes a step back, rearing to attack.");
-                            Console.WriteLine("----------------------------------------------------------------------");
-                        }
-                        else if (playerHealth > 6 && enemyHealth >= 10)
-                        {
-                            //enemy prepares quick attack
-                            enemyChoice = "2";
-                            Console.WriteLine("The enemy pulls back his arm and gets ready to swing!");
-                            Console.WriteLine("----------------------------------------------------------------------");
-                        }
-                        else if (enemyHealth < 8 && playerHealth > enemyHealth)
-                        {
-                            //enemy prepares dodge
-                            enemyChoice = "3";
-                            Console.WriteLine("The enemy looks like he's on gaurd.");
-                            Console.WriteLine("----------------------------------------------------------------------");
-                        }
-                        else
-                        {
-                            //enemy prepares block
-                            enemyChoice = "4";
-                            Console.WriteLine("The enemy slightly raises his shield.");
-                            Console.WriteLine("----------------------------------------------------------------------");
-                        }
-                        enemyStunned = false;
+                        string enemyChoice = enemyMove(enemyStunned);
 
 
-                        // call menu function to get player input for the battle
-                        playerChoice = DisplayMenu("What will you do?", "Strong attack", "Quick attack", "Dodge", "Block", "0");
+
+
+                    // call menu function to get player input for the battle
+                    playerChoice = DisplayMenu("What will you do?", "Strong attack", "Quick attack", "Dodge", "Block", "0");
                         Console.WriteLine("----------------------------------------------------------------------");
 
                         //process damage stat
-                        strengthDamage = playerStrength * strengthDamage;
+                        strengthDamage = strength * strengthDamage;
 
-                        strengthDamage = playerStrength * strengthDamage;
+                        strengthDamage = strength * strengthDamage;
                         int playerDamage = baseDamage + strengthDamage;
 
 
@@ -283,6 +281,20 @@ namespace HelloDungeon
             string playerChoice = "";
             while (playerChoice != "1" || playerChoice != "2" || playerChoice != "3" || playerChoice != "4" || playerChoice != "5")
             {
+                //display player and enemy health
+                Console.WriteLine("----------------------------------------------------------------------");
+                Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
+                Console.WriteLine("---------------       ----------------");
+
+                displayStats(playerName, playerHealth, strength);
+
+
+                if (enemyChoiceDialog != "")
+                {
+                    Console.WriteLine(enemyChoiceDialog);
+                    Console.WriteLine("----------------------------------------------------------------------");
+                }
+
                 Console.WriteLine(prompt);
                 Console.WriteLine("1. " + optionA);
                 Console.WriteLine("2. " + optionB);
@@ -315,7 +327,7 @@ namespace HelloDungeon
 
         }
 
-        void DisplayMainMenu()
+        void Stage1()
         {
             //call the getPlayerInfo function to get players information (name for now)
             playerName = getPlayerInfo();
@@ -327,6 +339,43 @@ namespace HelloDungeon
                 "\nBefore you have time to adjust to it, it vanishes and the muffles have become " +
                 "\nshouts as something grabs ahold and begins to shake you.",
                 "Attack", "Wake Up", "Go back to sleep", "0", "0");
+
+            while (getInput)
+            {
+
+
+                if (playerChoice == "1")
+                {
+                    //fight
+                    Console.WriteLine("You throw a jab straight ahead with full force into the figure's center.");
+                    Console.WriteLine("The figure stumbles back and you're able to hop on your feet.");
+                    Console.WriteLine("STRENGTH UP!!");
+                    strength++;
+                    combatInitiated = true;
+                    getInput = false;
+                }
+                else
+                {
+                    if (playerChoice == "2")
+                    {
+                        //dodge
+                        Console.WriteLine("You open your eyes and there's a figure rearing for a punch.");
+                        Console.WriteLine("You move your head out of the way just in time and you roll out from under him.");
+                        combatInitiated = true;
+                        getInput = false;
+                    }
+                    else if (playerChoice == "3")
+                    {
+                        //next stage B
+                        Console.WriteLine("There's a whoosh of air and you lose consciousness again.");
+                        getInput = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Input, try again.");
+                    }
+                }
+            }
         }
 
         //main function
@@ -337,45 +386,8 @@ namespace HelloDungeon
             while (!gameOver)
             {
 
-                DisplayMainMenu();
+                Stage1();
                 
-                while (getInput)
-                {
-
-
-                    if (playerChoice == "1")
-                    {
-                        //fight
-                        Console.WriteLine("You throw a jab straight ahead with full force into the figure's center.");
-                        Console.WriteLine("The figure stumbles back and you're able to hop on your feet.");
-                        Console.WriteLine("STRENGTH UP!!");
-                        strength++;
-                        combatInitiated = true;
-                        getInput = false;
-                    }
-                    else
-                    {
-                        if (playerChoice == "2")
-                        {
-                            //dodge
-                            Console.WriteLine("You open your eyes and there's a figure rearing for a punch.");
-                            Console.WriteLine("You move your head out of the way just in time and you roll out from under him.");
-                            combatInitiated = true;
-                            getInput = false;
-                        }
-                        else if (playerChoice == "3")
-                        {
-                            //next stage B
-                            Console.WriteLine("There's a whoosh of air and you lose consciousness again.");
-                            getInput = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid Input, try again.");
-                        }
-                    }
-                }
-
                 //Option to Continue
                 Console.WriteLine("Press any key to continue");
                 Console.ReadKey(true);
@@ -383,7 +395,7 @@ namespace HelloDungeon
 
                 //combat loop
 
-                initiateCombat(playerName, combatInitiated, playerHealth, basePlayerDamage, isAlive, strength);
+                initiateCombat(combatInitiated, basePlayerDamage, isAlive);
 
                 //present the user an option to restart or end the game
                 gameOver = restartMenu();
