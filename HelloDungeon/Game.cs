@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,9 +23,10 @@ namespace HelloDungeon
         int basePlayerDamage = 2;
         string enemyChoiceDialog = "";
         int enemyHealth;
+        bool stunned = false;
 
         //function to determine the enemy's next move
-        string enemyMove(bool stunned)
+        string enemyMove()
         {
             string eChoice;
             if (stunned)
@@ -32,6 +34,7 @@ namespace HelloDungeon
                 //enemy is stunned for a round
                 enemyChoiceDialog = "The enemy is still getting back up!";
                 eChoice = "0";
+                stunned = false;
             }
             else if ((playerHealth < enemyHealth) && (enemyHealth != 14) && (enemyHealth != 15) && (enemyHealth != 13))
             {
@@ -71,32 +74,35 @@ namespace HelloDungeon
         }
 
         //combat function
-        void initiateCombat(bool combat, int baseDamage, bool playerAlive)
+        void initiateCombat(int baseDamage, bool playerAlive)
         {
                 enemyHealth = 25;
                 int enemyDamage = 2;
-                bool enemyStunned = false;
+                stunned = false;
                 playerChoice = "0";
                 int strengthDamage = 2;
-                while (combat)
+               
+                while (combatInitiated)
                 {
 
                     if (playerHealth <= 0 || enemyHealth <= 0)
                     {
                         //end loop
-                        combat = false;
+                        combatInitiated = false;
                         if (enemyHealth <= 0)
                         {
                             //victory
                             Console.WriteLine("YOU WIN");
-                            combat = false;
+                            combatInitiated = false;
+                            continue;
                         }
                         else
                         {
                             //defeat
                             Console.WriteLine("YOU DIED");
-                            combat = false;
+                            combatInitiated = false;
                             playerAlive = false;
+                            continue;
                         }
 
                     }
@@ -107,7 +113,7 @@ namespace HelloDungeon
                         //battle
 
                         //enemy move
-                        string enemyChoice = enemyMove(enemyStunned);
+                        string enemyChoice = enemyMove();
 
 
 
@@ -184,7 +190,7 @@ namespace HelloDungeon
                             if (enemyChoice == "1")
                             {
                                 //dodge stun
-                                enemyStunned = true;
+                                stunned = true;
                                 Console.WriteLine("You dodge and he falls on the ground! He's stunned!");
                             }
                             else
@@ -287,16 +293,16 @@ namespace HelloDungeon
                     Console.WriteLine("----------------------------------------------------------------------");
                     Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
                     Console.WriteLine("---------------       ----------------");
-                }
-                displayStats(playerName, playerHealth, strength);
+                
+                 displayStats(playerName, playerHealth, strength);
                     
 
-                if (enemyChoiceDialog != "")
-                {
+                 if (enemyChoiceDialog != "")
+                 {
                     Console.WriteLine(enemyChoiceDialog);
                     Console.WriteLine("----------------------------------------------------------------------");
+                 }
                 }
-
                 Console.WriteLine(prompt);
                 Console.WriteLine("1. " + optionA);
                 Console.WriteLine("2. " + optionB);
@@ -319,6 +325,7 @@ namespace HelloDungeon
                 if (playerChoice == "1" || playerChoice == "2" || ((playerChoice == "3") && (optionC != "0")) || ((playerChoice == "4") && (optionD != "0")) || ((playerChoice == "5") && (optionE != "0")))
                 {
                     return playerChoice;
+                    Console.Clear();
                 }
                 else
                 {
@@ -332,6 +339,12 @@ namespace HelloDungeon
 
         }
 
+        void PressToContinue()
+        {
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey(true);
+            Console.Clear();
+        }
         void Stage1()
         {
             //call the getPlayerInfo function to get players information (name for now)
@@ -355,10 +368,11 @@ namespace HelloDungeon
                     Console.WriteLine("You throw a jab straight ahead with full force into the figure's center.");
                     Console.WriteLine("The figure stumbles back and you're able to hop on your feet.");
                     Console.WriteLine("STRENGTH UP!!");
+                    PressToContinue();
                     strength++;
                     combatInitiated = true;
                     getInput = false;
-                    initiateCombat(combatInitiated, basePlayerDamage, isAlive);
+                    initiateCombat(basePlayerDamage, isAlive);
                 }
                 else
                 {
@@ -367,14 +381,16 @@ namespace HelloDungeon
                         //dodge
                         Console.WriteLine("You open your eyes and there's a figure rearing for a punch.");
                         Console.WriteLine("You move your head out of the way just in time and you roll out from under him.");
+                        PressToContinue();
                         combatInitiated = true;
                         getInput = false;
-                        initiateCombat(combatInitiated, basePlayerDamage, isAlive);
+                        initiateCombat(basePlayerDamage, isAlive);
                     }
                     else if (playerChoice == "3")
                     {
                         //next stage B
                         Console.WriteLine("There's a whoosh of air and you lose consciousness again.");
+                        PressToContinue();
                         getInput = false;
                     }
                     else
@@ -388,7 +404,10 @@ namespace HelloDungeon
 
         void Stage2()
         {
-            //battle 2.
+            //battle 2
+            strength += 2;
+            playerHealth = 30;
+            enemyHealth = 70;
         }
 
         //main function
@@ -403,16 +422,21 @@ namespace HelloDungeon
                 {
                     Stage1();
                     stage++;
-                    playerChoice = DisplayMenu("Do you want to continue?" + "\n> ", "Yes", "No", "0", "0", "0");
+                    playerChoice = DisplayMenu("Do you want to continue?", "Yes", "No", "0", "0", "0");
                     if (playerChoice == "2")
                     {
                         gameOver = restartMenu();
                         continue;
                     }
+                    else (playerChoice == "1")
+                    {
+                        continue;
+                    }
+                    
                 }
                 else if (stage == 2)
                 {
-                 //   Stage2();
+                    Stage2();
                     stage++;
                     Console.WriteLine("The End.");
                     gameOver = restartMenu();
