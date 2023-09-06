@@ -76,7 +76,7 @@ namespace HelloDungeon
                 enemyHealth = 25;
                 int enemyDamage = 2;
                 bool enemyStunned = false;
-                string playerChoice = "0";
+                playerChoice = "0";
                 int strengthDamage = 2;
                 while (combat)
                 {
@@ -281,13 +281,15 @@ namespace HelloDungeon
             string playerChoice = "";
             while (playerChoice != "1" || playerChoice != "2" || playerChoice != "3" || playerChoice != "4" || playerChoice != "5")
             {
-                //display player and enemy health
-                Console.WriteLine("----------------------------------------------------------------------");
-                Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
-                Console.WriteLine("---------------       ----------------");
-
+                if (combatInitiated == true)
+                {
+                    //display player and enemy health
+                    Console.WriteLine("----------------------------------------------------------------------");
+                    Console.WriteLine("Your Health: " + playerHealth + "       Enemy Health: " + enemyHealth);
+                    Console.WriteLine("---------------       ----------------");
+                }
                 displayStats(playerName, playerHealth, strength);
-
+                    
 
                 if (enemyChoiceDialog != "")
                 {
@@ -333,7 +335,7 @@ namespace HelloDungeon
             playerName = getPlayerInfo();
 
             //display prompt/options and recieve input from the player by calling the function DisplayMenu
-            playerChoice = DisplayMenu("Your name is: " + playerName + "\nYou hear seagulls around you and the sound of waves crashing on a shore. " +
+            playerChoice = DisplayMenu("You hear seagulls around you and the sound of waves crashing on a shore. " +
                 "\nThere's a muffled voice coming from somewhere but you're not sure where. " +
                 "\nThe voice comes closer, you try to open your eyes but the light is blinding. " +
                 "\nBefore you have time to adjust to it, it vanishes and the muffles have become " +
