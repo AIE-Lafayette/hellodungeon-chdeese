@@ -8,6 +8,7 @@ namespace HelloDungeon
 {
     class Game
     {
+        //displays the player's stats
         void displayStats(string name, int playerHealth, int strength)
         {
             //display stat sheet to player
@@ -16,6 +17,7 @@ namespace HelloDungeon
             Console.WriteLine("----------------------------------------------------------------------");
         }
 
+        //combat function
         void initiateCombat(string username, bool combat, int playerHealth, int baseDamage, bool playerAlive, int playerStrength)
         {
                 int enemyHealth = 25;
@@ -211,6 +213,7 @@ namespace HelloDungeon
             
         }
 
+        //asked the user if they would like to restart the game and does or ends the game accordingly
         bool restartMenu()
         {
             string userInput = "";
@@ -242,6 +245,22 @@ namespace HelloDungeon
             return false;
         }
 
+        //gets player's name (for now)
+        string getPlayerInfo()
+        {
+            //get player name
+
+            Console.Write("Enter Name:");
+            string playerName = Console.ReadLine();
+
+            Console.Clear();
+
+            //print name for player feedback
+            Console.WriteLine("Character Name: " + playerName);
+
+            Console.Clear();
+            return playerName; 
+        }
 
         //Display menu options 4 & 5 must have 0 inside the string to not print them when calling.
         string DisplayMenu(string prompt, string optionA, string optionB, string optionC, string optionD, string optionE)
@@ -281,6 +300,7 @@ namespace HelloDungeon
 
         }
 
+        //main function
         public void Run()
         {
             bool gameOver = false;
@@ -297,20 +317,11 @@ namespace HelloDungeon
                 int strengthDamage = 2;
                 int basePlayerDamage = 2;
 
-                //get player name
-
-                Console.Write("Enter Name:");
-                playerName = Console.ReadLine();
-
-                Console.Clear();
-
-                //print name for player feedback
-                Console.WriteLine("Character Name: " + playerName);
-
-                Console.Clear();
+                //call the getPlayerInfo function to get players information (name for now)
+                playerName = getPlayerInfo();
 
                 //display prompt/options and recieve input from the player by calling the function DisplayMenu
-                string playerChoice = DisplayMenu("You hear seagulls around you and the sound of waves crashing on a shore. " +
+                string playerChoice = DisplayMenu("Your name is: " + playerName + "\nYou hear seagulls around you and the sound of waves crashing on a shore. " +
                     "\nThere's a muffled voice coming from somewhere but you're not sure where. " +
                     "\nThe voice comes closer, you try to open your eyes but the light is blinding. " +
                     "\nBefore you have time to adjust to it, it vanishes and the muffles have become " +
