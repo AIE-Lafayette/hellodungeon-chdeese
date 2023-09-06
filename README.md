@@ -1,5 +1,3 @@
-# hellodungeon-chdeese
-hellodungeon-chdeese created by GitHub Classroom
 **About:**
 Code Battler is a game where you fight after waking up on a beach. 
 
